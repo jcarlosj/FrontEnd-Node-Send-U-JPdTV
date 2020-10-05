@@ -12,10 +12,10 @@ const Header = () => {
             </Link>
             
             <div>
-                <Link href="/">
+                <Link href="/log-in">
                     <a className="bg-red-400 px-5 py-3 rounded-lg text-white font-bold uppercase mx-1">Iniciar Sesión</a>
                 </Link>
-                <Link href="/">
+                <Link href="/create-account">
                     <a className="bg-black px-5 py-3 rounded-lg text-white font-bold uppercase mx-1">Crear cuenta</a>
                 </Link>
             </div>
