@@ -1,8 +1,31 @@
 import React from 'react';
 import Layout from '../components/Layout';
 
+/** Dependencies */
+import { useFormik } from 'formik';
+
 /** Component */
 const CreateAccount = () => {
+
+    /** Form validation */
+    const formik = useFormik({
+        initialValues: {        //  Initial default values of Formik fields
+            name: '',
+            email: '',
+            password: ''
+        },
+        onSubmit: () => {
+            console .log( 'Sending...' );
+        },
+        onChange: () => {
+            console .log( 'Change the value of the element...' );
+        },
+        onBlur: () => {
+            console .log( 'Loses focus of the element' );
+        }
+    });
+
+
     return (
         <Layout>
             <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
@@ -11,7 +34,10 @@ const CreateAccount = () => {
                 
                 <div className="flex justify-center mt-5">
                     <div className="w-full max-w-lg">
-                        <form className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4">
+                        <form 
+                            className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
+                            onSubmit={ formik .handleSubmit }
+                        >
                             
                             <div className="mb-4">
                                 <label 
@@ -23,6 +49,9 @@ const CreateAccount = () => {
                                     type="text" 
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     placeholder="Nombre del usuario"
+                                    value={ formik .values .name }
+                                    onChange={ formik .handleChange }
+                                    onBlur={ formik .handleBlur }
                                 />
                             </div>
                             <div className="mb-4">
@@ -35,6 +64,9 @@ const CreateAccount = () => {
                                     type="email" 
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     placeholder="Email del usuario"
+                                    value={ formik .values .email }
+                                    onChange={ formik .handleChange }
+                                    onBlur={ formik .handleBlur }
                                 />
                             </div>
                             <div className="mb-4">
@@ -47,6 +79,9 @@ const CreateAccount = () => {
                                     type="password" 
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     placeholder="Contraseña del usuario"
+                                    value={ formik .values .password }
+                                    onChange={ formik .handleChange }
+                                    onBlur={ formik .handleBlur }
                                 />
                             </div>
                             <div className="mb-4">
