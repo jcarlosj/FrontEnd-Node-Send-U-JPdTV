@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 
 /** Dependencies */
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 /** Component */
 const CreateAccount = () => {
@@ -14,14 +15,22 @@ const CreateAccount = () => {
             email: '',
             password: ''
         },
-        onSubmit: () => {
-            console .log( 'Sending...' );
-        },
-        onChange: () => {
-            console .log( 'Change the value of the element...' );
-        },
-        onBlur: () => {
-            console .log( 'Loses focus of the element' );
+        /** Create a data Schema to create validation rules using Yup */
+        validationSchema: Yup .object({
+            name: Yup 
+                    .string() 
+                    .required( 'El nombre es requerido' ),
+            email: Yup 
+                    .string() 
+                    .email( 'No es un email válido' ) 
+                    .required( 'El email es requerido' ),
+            password: Yup 
+                        .string()
+                        .required( 'La contraseña es requerida' )
+                        .min( 6, 'La contraseña debe contener al menos 6 caracteres' )
+        }),
+        onSubmit: data => {
+            console .log( 'Sending', data );
         }
     });
 
@@ -53,6 +62,13 @@ const CreateAccount = () => {
                                     onChange={ formik .handleChange }
                                     onBlur={ formik .handleBlur }
                                 />
+                                { formik .touched .name && formik .errors .name 
+                                    ?   <div className="my-2 bg-gray-200 border-l-4 border-red-400 text-red-700 p-4">
+                                            <p className="font-bold">Error</p>
+                                            <p>{ formik .errors .name }</p>
+                                        </div> 
+                                    :  null
+                                }
                             </div>
                             <div className="mb-4">
                                 <label 
@@ -68,6 +84,13 @@ const CreateAccount = () => {
                                     onChange={ formik .handleChange }
                                     onBlur={ formik .handleBlur }
                                 />
+                                { formik .touched .email && formik .errors .email 
+                                    ?   <div className="my-2 bg-gray-200 border-l-4 border-red-400 text-red-700 p-4">
+                                            <p className="font-bold">Error</p>
+                                            <p>{ formik .errors .email }</p>
+                                        </div> 
+                                    :  null
+                                }
                             </div>
                             <div className="mb-4">
                                 <label 
@@ -83,6 +106,13 @@ const CreateAccount = () => {
                                     onChange={ formik .handleChange }
                                     onBlur={ formik .handleBlur }
                                 />
+                                { formik .touched .password && formik .errors .password 
+                                    ?   <div className="my-2 bg-gray-200 border-l-4 border-red-400 text-red-700 p-4">
+                                            <p className="font-bold">Error</p>
+                                            <p>{ formik .errors .password }</p>
+                                        </div> 
+                                    :  null
+                                }
                             </div>
                             <div className="mb-4">
                                 <button
