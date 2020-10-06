@@ -1,10 +1,15 @@
-import { SUCCESSFUL_REGISTRATION } from '../../types';
+/** Types */
+import { 
+    SUCCESSFUL_REGISTRATION, 
+    ERRONEOUS_REGISTRATION 
+} from '../../types';
 
 /** Reducer are the functions that will modify the State  */
 const AuthReducer = ( state, action ) => {
     switch( action .type ) {
         case SUCCESSFUL_REGISTRATION:
-            return{
+        case ERRONEOUS_REGISTRATION :
+            return {
                 ...state,
                 msg: action .payload
             };

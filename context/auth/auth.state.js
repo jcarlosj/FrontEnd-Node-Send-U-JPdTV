@@ -5,7 +5,10 @@ import AuthContext from './auth.context';
 import AuthReducer from './auth.reducer';
 
 /** Types */
-import { SUCCESSFUL_REGISTRATION } from '../../types';
+import { 
+    SUCCESSFUL_REGISTRATION, 
+    ERRONEOUS_REGISTRATION 
+} from '../../types';
 
 /** Dependencies */
 import clientAxios from '../../config/axios';
@@ -41,7 +44,11 @@ const AuthState = ({ children }) => {
             });
         } 
         catch( error ) {
-            console .error( error );
+            console .error( error .response .data .msg );
+            dispath({       //  Modify the state using the Reducer
+                type: ERRONEOUS_REGISTRATION,
+                payload: error .response .data .msg
+            });
         }
     }
 
