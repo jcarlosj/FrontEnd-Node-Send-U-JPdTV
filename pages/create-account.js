@@ -13,7 +13,7 @@ const CreateAccount = () => {
     /** Access to the State and Context functions */
     const 
         authContext = useContext( AuthContext ),
-        { user, autenticated_user } = authContext;
+        { registerUser } = authContext;
 
     /** Form validation */
     const formik = useFormik({
@@ -38,6 +38,7 @@ const CreateAccount = () => {
         }),
         onSubmit: data => {
             console .log( 'Sending', data );
+            registerUser( data );               // Execute Auth Context Function 
         }
     });
 
