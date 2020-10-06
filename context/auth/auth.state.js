@@ -7,7 +7,8 @@ import AuthReducer from './auth.reducer';
 /** Types */
 import { 
     SUCCESSFUL_REGISTRATION, 
-    ERRONEOUS_REGISTRATION 
+    ERRONEOUS_REGISTRATION,
+    HIDE_ALERT_COMPONENT 
 } from '../../types';
 
 /** Dependencies */
@@ -50,6 +51,13 @@ const AuthState = ({ children }) => {
                 payload: error .response .data .msg
             });
         }
+
+        /** Hide Alert Message */
+        setTimeout( () => {
+            dispath({       //  Modify the state using the Reducer
+                type: HIDE_ALERT_COMPONENT
+            });
+        }, 5000 );
     }
 
     return(
