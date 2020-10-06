@@ -1,12 +1,12 @@
-import { AUTHENTICATED_USER } from '../../types';
+import { SUCCESSFUL_REGISTRATION } from '../../types';
 
 /** Reducer are the functions that will modify the State  */
 const AuthReducer = ( state, action ) => {
     switch( action .type ) {
-        case AUTHENTICATED_USER:
+        case SUCCESSFUL_REGISTRATION:
             return{
                 ...state,
-                user: action .payload
+                msg: action .payload
             };
         default:
             return state;

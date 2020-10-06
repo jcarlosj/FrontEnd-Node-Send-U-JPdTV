@@ -5,7 +5,7 @@ import AuthContext from './auth.context';
 import AuthReducer from './auth.reducer';
 
 /** Types */
-import { AUTHENTICATED_USER } from '../../types';
+import { SUCCESSFUL_REGISTRATION } from '../../types';
 
 /** Dependencies */
 import clientAxios from '../../config/axios';
@@ -24,15 +24,7 @@ const AuthState = ({ children }) => {
         },
         [ state, dispath ] = useReducer( AuthReducer, initialState );   //  Define Reducer
 
-    const getUserAuthenticated = name => {
-        dispath({       //  Modify the state using the Reducer
-            type:AUTHENTICATED_USER,
-            payload: name
-        });
-    }
-
     const registerUser = async data => {
-        console .log( 'Registrar Usuario' );
 
         try {
             const response = await clientAxios      //  Implement request using Axios
@@ -42,6 +34,11 @@ const AuthState = ({ children }) => {
                 );
 
             console .log( 'registerUser', response );
+
+            dispath({       //  Modify the state using the Reducer
+                type: SUCCESSFUL_REGISTRATION,
+                payload: response .data .msg
+            });
         } 
         catch( error ) {
             console .error( error );
@@ -55,7 +52,6 @@ const AuthState = ({ children }) => {
                 authenticated_user: state .authenticated_user,
                 user: state .user,
                 msg: state .msg,
-                getUserAuthenticated,
                 registerUser
             }}
         >
