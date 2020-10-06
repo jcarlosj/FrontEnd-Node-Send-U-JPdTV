@@ -1,0 +1,1 @@
+/** Reducer are the functions that will modify the State  */
