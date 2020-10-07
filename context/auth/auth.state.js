@@ -8,6 +8,7 @@ import AuthReducer from './auth.reducer';
 import { 
     SUCCESSFUL_REGISTRATION, 
     ERRONEOUS_REGISTRATION,
+    ERRONEOUS_LOGIN,
     HIDE_ALERT_COMPONENT 
 } from '../../types';
 
@@ -39,11 +40,6 @@ const AuthState = ({ children }) => {
                 );
 
             console .log( 'registerUser', response );
-
-            dispath({       //  Modify the state using the Reducer
-                type: SUCCESSFUL_REGISTRATION,
-                payload: response .data .msg
-            });
         } 
         catch( error ) {
             console .error( error .response .data .msg );
@@ -75,7 +71,18 @@ const AuthState = ({ children }) => {
         } 
         catch ( error ) {
             console .error( error .response .data .msg );
+            dispath({       //  Modify the state using the Reducer
+                type: ERRONEOUS_LOGIN,
+                payload: error .response .data .msg
+            });
         }
+
+        /** Hide Alert Message */
+        setTimeout( () => {
+            dispath({       //  Modify the state using the Reducer
+                type: HIDE_ALERT_COMPONENT
+            });
+        }, 5000 );
         
     }
 

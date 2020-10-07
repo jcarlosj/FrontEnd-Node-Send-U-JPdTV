@@ -8,6 +8,9 @@ import AuthContext from '../context/auth/auth.context';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+/** Components */
+import Alert from '../components/Alert';
+
 /** Component */
 const LogIn = () => {
 
@@ -46,6 +49,8 @@ const LogIn = () => {
                 
                 <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4">Iniciar sesión</h2>
                 
+                { msg && <Alert /> }
+
                 <div className="flex justify-center mt-5">
                     <div className="w-full max-w-lg">
                         <form 

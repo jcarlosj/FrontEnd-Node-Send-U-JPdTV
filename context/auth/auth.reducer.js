@@ -2,6 +2,7 @@
 import { 
     SUCCESSFUL_REGISTRATION, 
     ERRONEOUS_REGISTRATION,
+    ERRONEOUS_LOGIN,
     HIDE_ALERT_COMPONENT 
 } from '../../types';
 
@@ -10,6 +11,7 @@ const AuthReducer = ( state, action ) => {
     switch( action .type ) {
         case SUCCESSFUL_REGISTRATION:
         case ERRONEOUS_REGISTRATION :
+        case ERRONEOUS_LOGIN:
             return {
                 ...state,
                 msg: action .payload
