@@ -9,11 +9,13 @@ import {
     SUCCESSFUL_REGISTRATION, 
     ERRONEOUS_REGISTRATION,
     ERRONEOUS_LOGIN,
+    AUTHENTICATED_USER,
     HIDE_ALERT_COMPONENT, SUCCESSFUL_LOGIN 
 } from '../../types';
 
 /** Dependencies */
 import clientAxios from '../../config/axios';
+import authToken from '../../config/auth.token';
 
 /** Define State:
  * Actions that trigger the functions that are in the Reducer
@@ -99,6 +101,26 @@ const AuthState = ({ children }) => {
     /** Get Authenticated User */
     const getAuthenticatedUser = async () => {
         console .log( 'Checking if the user is authenticated...' );
+
+        const token = localStorage .getItem( 'rns_token' );     //  Get Token
+
+        if( token ) {               //  Verify that a token has been obtained
+            authToken( token );     //  Send Token in the header using the Axios Client
+        }
+
+        try {
+            const response = await clientAxios .get( '/api/auth' );
+            
+            console .log( 'getAuthenticatedUser', response );
+
+            dispath({       //  Modify the state using the Reducer
+                type: AUTHENTICATED_USER,
+                payload: response .data .user
+            });
+        } 
+        catch( error ) {
+            console .error( error );    
+        }
     }
 
     return(

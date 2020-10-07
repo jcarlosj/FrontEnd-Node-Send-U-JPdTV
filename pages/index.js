@@ -12,17 +12,13 @@ const Index = () => {
     /** Access to the State and Context functions */
     const 
         authContext = useContext( AuthContext ),
-        {   msg, is_authenticated,
-            getAuthenticatedUser
-        } = authContext;
+        { getAuthenticatedUser } = authContext;
 
     /** Change tracking
      * Similar to componentDidMount and componentDidUpdate  */
     useEffect( () => {
-        getAuthenticatedUser();
+        getAuthenticatedUser();     //  Extract authenticated user from token in LocalStorage
     }, [] );
-    /** Extract authenticated user from token in LocalStorage */
-    
 
     return (
         <Layout>
