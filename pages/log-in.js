@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Layout from '../components/Layout';
+
+/** Context */
+import AuthContext from '../context/auth/auth.context';
 
 /** Dependencies */
 import { useFormik } from 'formik';
@@ -7,6 +10,13 @@ import * as Yup from 'yup';
 
 /** Component */
 const LogIn = () => {
+
+    /** Access to the State and Context functions */
+    const 
+        authContext = useContext( AuthContext ),
+        {   msg, 
+            logIn 
+        } = authContext;
 
     /** Form validation */
     const formik = useFormik({
@@ -26,6 +36,7 @@ const LogIn = () => {
         }),
         onSubmit: data => {
             console .log( 'Sending', data );
+            logIn( data );                      // Execute Auth Context Function 
         }
     });
 

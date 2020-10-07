@@ -28,6 +28,7 @@ const AuthState = ({ children }) => {
         },
         [ state, dispath ] = useReducer( AuthReducer, initialState );   //  Define Reducer
 
+    /** Register User */
     const registerUser = async data => {
 
         try {
@@ -60,6 +61,11 @@ const AuthState = ({ children }) => {
         }, 5000 );
     }
 
+    /** Authenticate User */
+    const logIn = async data => {
+        console .log( 'LogIn', data );
+    }
+
     return(
         <AuthContext .Provider
             value={{ 
@@ -67,7 +73,8 @@ const AuthState = ({ children }) => {
                 authenticated_user: state .authenticated_user,
                 user: state .user,
                 msg: state .msg,
-                registerUser
+                registerUser,
+                logIn
             }}
         >
             { children }
