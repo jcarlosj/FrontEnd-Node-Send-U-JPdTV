@@ -96,6 +96,11 @@ const AuthState = ({ children }) => {
         
     }
 
+    /** Get Authenticated User */
+    const getAuthenticatedUser = async () => {
+        console .log( 'Checking if the user is authenticated...' );
+    }
+
     return(
         <AuthContext .Provider
             value={{ 
@@ -104,7 +109,8 @@ const AuthState = ({ children }) => {
                 user: state .user,
                 msg: state .msg,
                 registerUser,
-                logIn
+                logIn,
+                getAuthenticatedUser
             }}
         >
             { children }
