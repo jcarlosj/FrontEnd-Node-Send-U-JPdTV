@@ -63,7 +63,20 @@ const AuthState = ({ children }) => {
 
     /** Authenticate User */
     const logIn = async data => {
-        console .log( 'LogIn', data );
+
+        try {
+            const response = await clientAxios      //  Implement request using Axios
+                .post( 
+                    '/api/auth',                    //  Path requested to the BackEnd
+                    data                            //  Data sent to the BackEnd
+                );    
+            
+            console .log( 'LogIn', response );    
+        } 
+        catch ( error ) {
+            console .error( error .response .data .msg );
+        }
+        
     }
 
     return(
