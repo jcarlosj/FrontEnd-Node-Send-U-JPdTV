@@ -10,6 +10,7 @@ import {
     ERRONEOUS_REGISTRATION,
     ERRONEOUS_LOGIN,
     AUTHENTICATED_USER,
+    SIGN_OFF,
     HIDE_ALERT_COMPONENT, SUCCESSFUL_LOGIN 
 } from '../../types';
 
@@ -119,8 +120,20 @@ const AuthState = ({ children }) => {
             });
         } 
         catch( error ) {
-            console .error( error );    
+            console .error( error );   
+            dispath({       //  Modify the state using the Reducer
+                type: ERRONEOUS_LOGIN,
+                payload: error .response .data .msg
+            });
         }
+    }
+
+    /** Close User Session */
+    const SignOff = async () => {
+        console .log( 'Closing session...' );
+        dispath({       //  Modify the state using the Reducer
+            type: SIGN_OFF
+        });
     }
 
     return(
@@ -132,7 +145,8 @@ const AuthState = ({ children }) => {
                 msg: state .msg,
                 registerUser,
                 logIn,
-                getAuthenticatedUser
+                getAuthenticatedUser,
+                SignOff
             }}
         >
             { children }

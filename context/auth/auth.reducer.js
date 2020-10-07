@@ -5,6 +5,7 @@ import {
     SUCCESSFUL_LOGIN,
     ERRONEOUS_LOGIN,
     AUTHENTICATED_USER,
+    SIGN_OFF,
     HIDE_ALERT_COMPONENT 
 } from '../../types';
 
@@ -28,8 +29,15 @@ const AuthReducer = ( state, action ) => {
         case AUTHENTICATED_USER:
             return {
                 ...state,
-                user: action .payload,
-                is_authenticated: true
+                user: action .payload
+            };
+        case SIGN_OFF:
+            localStorage .removeItem( 'rns_token' );
+            return {
+                ...state,
+                user: null,
+                is_authenticated: null,
+                token: null
             };
         case HIDE_ALERT_COMPONENT: 
             return {
