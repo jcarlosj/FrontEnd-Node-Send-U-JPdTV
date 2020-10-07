@@ -23,7 +23,7 @@ const AuthState = ({ children }) => {
     const 
         initialState = {            //  Define State
             token: ( typeof window !== 'undefined' ) ? localStorage .getItem( 'rns_token' ) : '',       //  Check if token exists in Storage to set it as default in Auth Context State
-            is_authenticated: ( typeof window !== 'undefined' ) ? true : null,                          //  Check if token exists in Storage to set it as default in Auth Context State
+            is_authenticated: null,                          
             user: null,
             msg: null
         },

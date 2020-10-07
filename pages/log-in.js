@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import Layout from '../components/Layout';
+import React, { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 /** Context */
 import AuthContext from '../context/auth/auth.context';
@@ -9,15 +9,18 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 /** Components */
+import Layout from '../components/Layout';
 import Alert from '../components/Alert';
 
 /** Component */
 const LogIn = () => {
 
+    const router = useRouter();
+
     /** Access to the State and Context functions */
     const 
         authContext = useContext( AuthContext ),
-        {   msg, 
+        {   msg, is_authenticated,
             logIn 
         } = authContext;
 
@@ -42,6 +45,14 @@ const LogIn = () => {
             logIn( data );                      // Execute Auth Context Function 
         }
     });
+
+    /** Change tracking
+     * Similar to componentDidMount and componentDidUpdate  */
+    useEffect( () => {
+        if( is_authenticated ) {
+            router .push( '/' );
+        }
+    }, [ is_authenticated ] );
 
     return (
         <Layout>
