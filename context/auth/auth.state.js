@@ -9,7 +9,7 @@ import {
     SUCCESSFUL_REGISTRATION, 
     ERRONEOUS_REGISTRATION,
     ERRONEOUS_LOGIN,
-    HIDE_ALERT_COMPONENT 
+    HIDE_ALERT_COMPONENT, SUCCESSFUL_LOGIN 
 } from '../../types';
 
 /** Dependencies */
@@ -22,8 +22,8 @@ const AuthState = ({ children }) => {
 
     const 
         initialState = {            //  Define State
-            token: '',
-            authenticated_user: null,
+            token: ( typeof window !== 'undefined' ) ? localStorage .getItem( 'rns_token' ) : '',       //  Check if token exists in Storage to set it as default in Auth Context State
+            is_authenticated: ( typeof window !== 'undefined' ) ? true : null,                          //  Check if token exists in Storage to set it as default in Auth Context State
             user: null,
             msg: null
         },
@@ -40,6 +40,11 @@ const AuthState = ({ children }) => {
                 );
 
             console .log( 'registerUser', response );
+
+            dispath({       //  Modify the state using the Reducer
+                type: SUCCESSFUL_REGISTRATION,
+                payload: response .data .msg
+            });
         } 
         catch( error ) {
             console .error( error .response .data .msg );
@@ -68,6 +73,11 @@ const AuthState = ({ children }) => {
                 );    
             
             console .log( 'LogIn', response );    
+
+            dispath({       //  Modify the state using the Reducer
+                type: SUCCESSFUL_LOGIN,
+                payload: response .data .token
+            });
         } 
         catch ( error ) {
             console .error( error .response .data .msg );
@@ -77,7 +87,7 @@ const AuthState = ({ children }) => {
             });
         }
 
-        /** Hide Alert Message */
+                /** Hide Alert Message */
         setTimeout( () => {
             dispath({       //  Modify the state using the Reducer
                 type: HIDE_ALERT_COMPONENT
@@ -90,7 +100,7 @@ const AuthState = ({ children }) => {
         <AuthContext .Provider
             value={{ 
                 token: state .token,
-                authenticated_user: state .authenticated_user,
+                is_authenticated: state .is_authenticated,
                 user: state .user,
                 msg: state .msg,
                 registerUser,

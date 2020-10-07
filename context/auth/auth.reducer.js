@@ -2,6 +2,7 @@
 import { 
     SUCCESSFUL_REGISTRATION, 
     ERRONEOUS_REGISTRATION,
+    SUCCESSFUL_LOGIN,
     ERRONEOUS_LOGIN,
     HIDE_ALERT_COMPONENT 
 } from '../../types';
@@ -15,6 +16,13 @@ const AuthReducer = ( state, action ) => {
             return {
                 ...state,
                 msg: action .payload
+            };
+        case SUCCESSFUL_LOGIN: 
+            localStorage .setItem( 'rns_token', action .payload );
+            return {
+                ...state,
+                token: action .payload,
+                is_authenticated: true
             };
         case HIDE_ALERT_COMPONENT: 
             return {
