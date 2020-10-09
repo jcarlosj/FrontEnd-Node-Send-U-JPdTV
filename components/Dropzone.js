@@ -35,7 +35,7 @@ const Dropzone = () => {
                 className="bg-white flex- p-3 mb-4 shadow-lg rounded"
             >
                 <p className="font-bold text-xl">{ file .path }</p>
-                <p className="text-sm text-gray-500">{ file .size } bytes</p>
+                <p className="text-sm text-gray-500">{ ( file .size / Math .pow( 1024, 2 ) ) .toFixed( 2 ) } MB</p>
             </li>
         );
     });
