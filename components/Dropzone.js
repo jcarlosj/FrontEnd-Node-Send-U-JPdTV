@@ -5,18 +5,17 @@ import AppContext from '../context/app/app.context';
 
 /** Dependencies */
 import { useDropzone } from 'react-dropzone';
-import clientAxios from '../config/axios';
 
 const Dropzone = () => {
 
     /** Access to the State and Context functions */
     const 
         appContext = useContext( AppContext ),
-        { showMessage } = appContext;
+        { showMessage, uploadFile } = appContext;
 
     /** Dropzone function: When the uploaded files are accepted */
     const onDropAccepted = useCallback( async ( acceptedFiles ) => {     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
-            console .log( 'Archivo subido...', acceptedFiles );
+            //console .log( 'Archivo subido...', acceptedFiles );
 
             const formData = new FormData();                              //  Crea Objeto de tipo Form-Data para subir archivos
             formData .append(
@@ -24,9 +23,8 @@ const Dropzone = () => {
                 acceptedFiles[ 0 ]      // Informacion del archivo
             );
 
-            const response = await clientAxios .post( '/api/files', formData );     //  Petición al BackEnd para subir el archivo
+            uploadFile( formData );
 
-            console .log( 'onDrop', response .data );
         }, [] );
 
     /** Dropzone function: When uploaded files are rejected */

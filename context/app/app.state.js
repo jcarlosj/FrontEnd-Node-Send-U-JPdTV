@@ -4,6 +4,9 @@ import React, { useReducer } from 'react';
 import AppContext from './app.context';
 import AppReducer from './app.reducer';
 
+/** Dependencies */
+import clientAxios from '../../config/axios';
+
 /** Types */
 import { 
     SHOW_ALERT_COMPONENT,
@@ -41,11 +44,25 @@ const AppState = ({ children }) => {
 
     }
 
+    /** Upload file to server */
+    const uploadFile = async ( formData ) => {
+
+        try {
+            const response = await clientAxios .post( '/api/files', formData );     //  Petición al BackEnd para subir el archivo
+
+            console .log( 'uploadFile', response .data );
+        } 
+        catch( error ) {
+            console .error( error );
+        }
+    }
+
     return(
         <AppContext .Provider
             value={{ 
                 msg_file: state .msg_file,
-                showMessage
+                showMessage,
+                uploadFile
             }}
         >
             { children }
