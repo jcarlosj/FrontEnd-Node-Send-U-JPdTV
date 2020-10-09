@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 /** Dependencies */
 import { useDropzone } from 'react-dropzone';
@@ -6,8 +6,8 @@ import clientAxios from '../config/axios';
 
 const Dropzone = () => {
 
-    const onDrop = useCallback(     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
-        async ( acceptedFiles ) => {
+    /** Dropzone function: When the uploaded files are accepted */
+    const onDropAccepted = useCallback( async ( acceptedFiles ) => {     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
             console .log( 'Archivo subido...', acceptedFiles );
 
             const formData = new FormData();                              //  Crea Objeto de tipo Form-Data para subir archivos
@@ -19,11 +19,18 @@ const Dropzone = () => {
             const response = await clientAxios .post( '/api/files', formData );     //  Petición al BackEnd para subir el archivo
 
             console .log( 'onDrop', response .data );
-        },
-        []
-    );
+        }, [] );
+
+    /** Dropzone function: When uploaded files are rejected */
+    const onDropRejected = () => {
+        console .log( 'Ops! No se pudo subir!' );
+    }
     
-    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({ onDrop });    //  Extract properties from Dropzone
+    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({      //  Extract properties from Dropzone
+        onDropAccepted,         //  Se ejecuta cuando los archivos subidos sean aceptados
+        onDropRejected,         //  Se ejecuta cuando los archivos a subir no han sido aceptados
+        maxSize: 1000000        //  Regla de validacion para aceptar la subida de archivos de máximo 1MB
+    });    
 
     /** List of uploaded files */
     const files = acceptedFiles .map( file => {
