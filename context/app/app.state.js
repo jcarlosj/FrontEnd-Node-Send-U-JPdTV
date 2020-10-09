@@ -11,6 +11,7 @@ import clientAxios from '../../config/axios';
 import { 
     SHOW_ALERT_COMPONENT,
     HIDE_ALERT_COMPONENT,
+    UPLOADING_FILE,
     SUCESSFUL_FILE_UPLOAD,
     ERRONEOUS_FILE_UPLOAD,
     LINK_SUCCESSFULLY_CREATED,
@@ -26,7 +27,8 @@ const AppState = ({ children }) => {
         initialState = {
             msg_file: null,
             name: '',
-            original_name: ''
+            original_name: '',
+            loading: false
         },            //  Define State
         [ state, dispath ] = useReducer( AppReducer, initialState );   //  Define Reducer
 
@@ -48,6 +50,10 @@ const AppState = ({ children }) => {
 
     /** Upload file to server */
     const uploadFile = async ( formData, nameFile ) => {
+
+        dispath({
+            type: UPLOADING_FILE
+        });
 
         try {
             const response = await clientAxios .post( '/api/files', formData );     //  Petición al BackEnd para subir el archivo
@@ -77,7 +83,7 @@ const AppState = ({ children }) => {
                 type: HIDE_ALERT_COMPONENT
             });
         }, 5000 );
-        
+
     }
 
     return(
@@ -86,6 +92,7 @@ const AppState = ({ children }) => {
                 msg_file: state .msg_file,
                 name: state .name,
                 original_name: state .original_name,
+                loading: state .loading,
                 showMessage,
                 uploadFile
             }}

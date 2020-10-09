@@ -2,6 +2,7 @@
 import { 
     SHOW_ALERT_COMPONENT,
     HIDE_ALERT_COMPONENT,
+    UPLOADING_FILE,
     SUCESSFUL_FILE_UPLOAD,
     ERRONEOUS_FILE_UPLOAD,
     LINK_SUCCESSFULLY_CREATED,
@@ -21,17 +22,25 @@ const AuthReducer = ( state, action ) => {
                 ...state,
                 msg_file: null
             }
+        case UPLOADING_FILE: 
+            console .log( 'Loading...' );
+            return {
+                ...state,
+                loading: true
+            }
         case SUCESSFUL_FILE_UPLOAD:
             return {
                 ...state,
                 msg_file: action .payload .msg_file,
                 name: action .payload .name,
-                original_name: action .payload .original_name
+                original_name: action .payload .original_name,
+                loading: false
             }
         case ERRONEOUS_FILE_UPLOAD:
             return {
                 ...state,
-                msg_file: action .payload
+                msg_file: action .payload,
+                loading: false
             }
         default:
             return state;

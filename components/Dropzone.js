@@ -11,7 +11,9 @@ const Dropzone = () => {
     /** Access to the State and Context functions */
     const 
         appContext = useContext( AppContext ),
-        { showMessage, uploadFile } = appContext;
+        {   loading,
+            showMessage, uploadFile
+        } = appContext;
 
     /** Dropzone function: When the uploaded files are accepted */
     const onDropAccepted = useCallback( async ( acceptedFiles ) => {     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
@@ -66,11 +68,16 @@ const Dropzone = () => {
                 ?   <div className="mt-10 w-full">
                         <h4 className="text-2xl font-bold text-center mb-4">Archivos</h4>
                         <ul>{ files }</ul>
-                        <button 
-                            type="button"
-                            className="bg-blue-700 w-full py-2 rounded-lg text-white my-4 hover:bg-blue-800"
-                            onClick={ () => createLink() }
-                        >Crear enlace</button>
+
+                        { loading 
+                            ?   <p className="text-center my-10 text-gray-800 font-bold">Subiendo el archivo...</p>
+                            :   <button 
+                                    type="button"
+                                    className="bg-blue-700 w-full py-2 rounded-lg text-white my-4 hover:bg-blue-800"
+                                    onClick={ () => createLink() }
+                                >Crear enlace</button>
+                        }
+
                     </div>
                 :   <div { ...getRootProps({ className: 'dropzone w-full py-32' }) }>
                         <input className="h-100" { ...getInputProps() } />
