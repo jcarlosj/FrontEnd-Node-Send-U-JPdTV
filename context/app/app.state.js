@@ -20,12 +20,27 @@ import {
 const AppState = ({ children }) => {
 
     const 
-        initialState = {},            //  Define State
+        initialState = {
+            msg_file: ''
+        },            //  Define State
         [ state, dispath ] = useReducer( AppReducer, initialState );   //  Define Reducer
+
+    /** Show alert message */
+    const showMessage = msg => {
+        console .log( 'showMessage', msg );
+        dispath({
+            type: SHOW_ALERT_COMPONENT,
+            payload: msg
+        });
+
+    }
 
     return(
         <AppContext .Provider
-            value={{ }}
+            value={{ 
+                msg_file: state .msg_file,
+                showMessage
+            }}
         >
             { children }
         </AppContext .Provider>

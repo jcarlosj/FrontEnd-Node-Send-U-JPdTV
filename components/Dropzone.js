@@ -1,10 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
+
+/** Context */
+import AppContext from '../context/app/app.context';
 
 /** Dependencies */
 import { useDropzone } from 'react-dropzone';
 import clientAxios from '../config/axios';
 
 const Dropzone = () => {
+
+    /** Access to the State and Context functions */
+    const 
+        appContext = useContext( AppContext ),
+        { showMessage } = appContext;
 
     /** Dropzone function: When the uploaded files are accepted */
     const onDropAccepted = useCallback( async ( acceptedFiles ) => {     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
@@ -23,7 +31,7 @@ const Dropzone = () => {
 
     /** Dropzone function: When uploaded files are rejected */
     const onDropRejected = () => {
-        console .log( 'Ops! No se pudo subir!' );
+        showMessage( 'Ops! No se pudo subir!' );
     }
     
     const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({      //  Extract properties from Dropzone

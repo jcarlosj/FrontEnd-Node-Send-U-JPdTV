@@ -11,7 +11,11 @@ import {
 /** Reducer are the functions that will modify the State  */
 const AuthReducer = ( state, action ) => {
     switch( action .type ) {
-
+        case SHOW_ALERT_COMPONENT:
+            return {
+                ...state,
+                msg_file: action .payload
+            }
         default:
             return state;
     }
