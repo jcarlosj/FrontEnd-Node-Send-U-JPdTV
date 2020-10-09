@@ -57,6 +57,7 @@ const AppState = ({ children }) => {
             dispath({
                 type: SUCESSFUL_FILE_UPLOAD,
                 payload: {
+                    msg_file: 'Archivo subido exitosamente!',
                     name: response .data .file,
                     original_name: nameFile
                 }
@@ -64,7 +65,19 @@ const AppState = ({ children }) => {
         } 
         catch( error ) {
             console .error( error );
+
+            dispath({
+                type: ERRONEOUS_FILE_UPLOAD,
+                payload: error .response .data .msg
+            });
         }
+
+        setTimeout( () => {
+            dispath({
+                type: HIDE_ALERT_COMPONENT
+            });
+        }, 5000 );
+        
     }
 
     return(
