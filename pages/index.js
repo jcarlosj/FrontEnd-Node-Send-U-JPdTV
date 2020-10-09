@@ -3,10 +3,12 @@ import Link from 'next/link';
 
 /** Context */
 import AuthContext from '../context/auth/auth.context';
+import AppContext from '../context/app/app.context';
 
 /** Components */
 import Layout from '../components/Layout';
 import Dropzone from '../components/Dropzone';
+import Alert from '../components/Alert';
 
 /** Component */
 const Index = () => {
@@ -14,7 +16,9 @@ const Index = () => {
     /** Access to the State and Context functions */
     const 
         authContext = useContext( AuthContext ),
-        { getAuthenticatedUser } = authContext;
+        { getAuthenticatedUser } = authContext,
+        appContext = useContext( AppContext ),
+        { msg_file } = appContext;
 
     /** Change tracking
      * Similar to componentDidMount and componentDidUpdate  */
@@ -27,6 +31,8 @@ const Index = () => {
             <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
                 <div className="lg:flex md:shadow-lg p-5 bg-white rounded-lg py-10">
                     
+                    { msg_file && <Alert /> }
+
                     <Dropzone />
                     
                     <div className="md:flex-1 mb-3 mx-2 mt-6 lg:mt-0">

@@ -16,6 +16,11 @@ const AuthReducer = ( state, action ) => {
                 ...state,
                 msg_file: action .payload
             }
+        case HIDE_ALERT_COMPONENT:
+            return {
+                ...state,
+                msg_file: null
+            }
         default:
             return state;
     }

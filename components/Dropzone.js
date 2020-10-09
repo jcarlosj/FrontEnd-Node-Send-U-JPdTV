@@ -31,7 +31,7 @@ const Dropzone = () => {
 
     /** Dropzone function: When uploaded files are rejected */
     const onDropRejected = () => {
-        showMessage( 'Ops! No se pudo subir!' );
+        showMessage( 'Ops! No se pudo subir, el límite es de 1MB. \nObten una cuenta gratuita para subir archivos más grandes!' );
     }
     
     const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({      //  Extract properties from Dropzone

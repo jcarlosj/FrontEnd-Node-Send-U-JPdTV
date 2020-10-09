@@ -33,6 +33,12 @@ const AppState = ({ children }) => {
             payload: msg
         });
 
+        setTimeout( () => {
+            dispath({
+                type: HIDE_ALERT_COMPONENT
+            });
+        }, 5000 );
+
     }
 
     return(
