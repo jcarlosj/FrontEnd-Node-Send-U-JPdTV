@@ -7,8 +7,18 @@ import clientAxios from '../config/axios';
 const Dropzone = () => {
 
     const onDrop = useCallback(     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
-        ( acceptedFiles ) => {
+        async ( acceptedFiles ) => {
             console .log( 'Archivo subido...', acceptedFiles );
+
+            const formData = new FormData();                              //  Crea Objeto de tipo Form-Data para subir archivos
+            formData .append(
+                'file',                 // Key
+                acceptedFiles[ 0 ]      // Informacion del archivo
+            );
+
+            const response = await clientAxios .post( '/api/files', formData );     //  Petición al BackEnd para subir el archivo
+
+            console .log( 'onDrop', response .data );
         },
         [ acceptedFiles ]
     );
