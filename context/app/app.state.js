@@ -24,7 +24,9 @@ const AppState = ({ children }) => {
 
     const 
         initialState = {
-            msg_file: ''
+            msg_file: null,
+            name: '',
+            original_name: ''
         },            //  Define State
         [ state, dispath ] = useReducer( AppReducer, initialState );   //  Define Reducer
 
@@ -45,12 +47,20 @@ const AppState = ({ children }) => {
     }
 
     /** Upload file to server */
-    const uploadFile = async ( formData ) => {
+    const uploadFile = async ( formData, nameFile ) => {
 
         try {
             const response = await clientAxios .post( '/api/files', formData );     //  Petición al BackEnd para subir el archivo
 
             console .log( 'uploadFile', response .data );
+
+            dispath({
+                type: SUCESSFUL_FILE_UPLOAD,
+                payload: {
+                    name: response .data .file,
+                    original_name: nameFile
+                }
+            });
         } 
         catch( error ) {
             console .error( error );
@@ -61,6 +71,8 @@ const AppState = ({ children }) => {
         <AppContext .Provider
             value={{ 
                 msg_file: state .msg_file,
+                name: state .name,
+                original_name: state .original_name,
                 showMessage,
                 uploadFile
             }}

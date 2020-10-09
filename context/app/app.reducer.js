@@ -21,6 +21,12 @@ const AuthReducer = ( state, action ) => {
                 ...state,
                 msg_file: null
             }
+        case SUCESSFUL_FILE_UPLOAD:
+            return {
+                ...state,
+                name: action .payload .name,
+                original_name: action .payload .original_name
+            }
         default:
             return state;
     }

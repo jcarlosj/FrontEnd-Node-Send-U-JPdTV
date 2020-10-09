@@ -20,10 +20,10 @@ const Dropzone = () => {
             const formData = new FormData();                              //  Crea Objeto de tipo Form-Data para subir archivos
             formData .append(
                 'file',                 // Key
-                acceptedFiles[ 0 ]      // Informacion del archivo
+                acceptedFiles[ 0 ]      // Informacion del archivo (Nombre Original)
             );
 
-            uploadFile( formData );
+            uploadFile( formData, acceptedFiles[ 0 ] .path );
 
         }, [] );
 
