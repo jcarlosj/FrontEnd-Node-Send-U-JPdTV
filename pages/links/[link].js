@@ -19,20 +19,24 @@ export async function getStaticProps({ params }) {
 
 /** Next.js pre-renderizará estáticamente todas las rutas especificadas */
 export async function getStaticPaths() {
+
+    const links = [         //  Simula obtener rutas de una peticion a una API
+        { url: 'ewiufwywe' },
+        { url: 'dsjdhgtrd' },
+        { url: 'oishbtsde' }
+    ];
     
     return { 
-        paths: [                        //  Propiedad Obligatoria: Hará disponible rutas estáticas a cada propiedad que se le pase
-            { params: { link: '1' } },  //  Esta propiedad debe tener el mismo nombre del archivo que define el Componente Dinámico, en este caso [link].js 
-            { params: { link: '2' } },  //  Esta propiedad debe tener el mismo nombre del archivo que define el Componente Dinámico, en este caso [link].js 
-            { params: { link: '3' } }   //  Esta propiedad debe tener el mismo nombre del archivo que define el Componente Dinámico, en este caso [link].js 
-        ],
+        paths: links .map( link => ({   //  Propiedad Obligatoria: Hará disponible rutas estáticas a cada propiedad que se le pase
+            params: { link: link .url } //  Iteracion de parametros para generar cada ruta estática
+        })),
         fallback: false                 //  Propiedad Obligatoria: true muestra componente aun si no se encuentra la ruta, false obtendrá un 404
     };
     /** 
      * Las rutas estáticas generadas para este caso serán:
-     *  - http://localhost:3000/links/1
-     *  - http://localhost:3000/links/2
-     *  - http://localhost:3000/links/3
+     *  - http://localhost:3000/links/ewiufwywe
+     *  - http://localhost:3000/links/dsjdhgtrd
+     *  - http://localhost:3000/links/oishbtsde
      */
 }
   
