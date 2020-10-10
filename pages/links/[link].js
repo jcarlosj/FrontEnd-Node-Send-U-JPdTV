@@ -1,5 +1,8 @@
 import Layout from '../../components/Layout';
 
+/** Dependencies */
+import clientAxios from '../../config/axios';
+
 export async function getStaticProps({ params }) {
     console .log( 'params', params );
 
@@ -20,14 +23,12 @@ export async function getStaticProps({ params }) {
 /** Next.js pre-renderizará estáticamente todas las rutas especificadas */
 export async function getStaticPaths() {
 
-    const links = [         //  Simula obtener rutas de una peticion a una API
-        { url: 'ewiufwywe' },
-        { url: 'dsjdhgtrd' },
-        { url: 'oishbtsde' }
-    ];
+    const response = await clientAxios .get( `/api/links` );
+
+    console .info( 'getStaticPaths', response .data );
     
     return { 
-        paths: links .map( link => ({   //  Propiedad Obligatoria: Hará disponible rutas estáticas a cada propiedad que se le pase
+        paths: response .data .links .map( link => ({   //  Propiedad Obligatoria: Hará disponible rutas estáticas a cada propiedad que se le pase
             params: { link: link .url } //  Iteracion de parametros para generar cada ruta estática
         })),
         fallback: false                 //  Propiedad Obligatoria: true muestra componente aun si no se encuentra la ruta, false obtendrá un 404
