@@ -3,12 +3,18 @@ import Layout from '../../components/Layout';
 /** Dependencies */
 import clientAxios from '../../config/axios';
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }) {      //  Destructuracion de props
     console .log( 'params', params );
 
+    const
+        { link } = params,
+        response = await clientAxios .get( `/api/links/${ link }` );
+
+    console .info( 'getStaticProps', response .data );
+
     return { 
-        props: {                //  Propiedad Obligatoria: Se pasara al componente dinamico, es decir como props a LinkDynamicComponent
-            link: params .link  //  Esta propiedad debe tener el mismo nombre del archivo que define el Componente Dinámico, en este caso [link].js 
+        props: {                        //  Propiedad Obligatoria: Se pasara al componente dinamico, es decir como props a LinkDynamicComponent
+            link: response .data .link  //  Esta propiedad debe tener el mismo nombre del archivo que define el Componente Dinámico, en este caso [link].js 
         } 
     };
     /**
@@ -45,9 +51,11 @@ export async function getStaticPaths() {
 /** Dynamic Component */
 const LinkDynamicComponent = ({ link }) => {
 
+    console .info( 'LinkDynamicComponent', link );
+
     return (
         <Layout>
-            <h1>Component with Dynamic Routing <strong>[{ link }].js</strong></h1>
+            <h1>Component with Dynamic Routing <strong>[{ link .url }].js</strong></h1>
         </Layout>
     );
 }
