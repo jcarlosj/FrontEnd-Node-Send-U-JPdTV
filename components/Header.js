@@ -24,7 +24,7 @@ const Header = () => {
         <header className="py-8 flex flex-col md:flex-row itmes-center justify-between">
             <Link href="/">
                 <a>
-                    <img className="w-64 mb-8 md:mb-0" src="logo.svg" />
+                    <img className="w-64 mb-8 md:mb-0" src="/logo.svg" />
                 </a>
             </Link>
             
