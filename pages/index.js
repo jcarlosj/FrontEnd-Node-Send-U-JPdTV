@@ -29,9 +29,10 @@ const Index = () => {
     return (
         <Layout>
             <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
+                
+                { msg_file && <Alert /> }
+                
                 <div className="lg:flex md:shadow-lg p-5 bg-white rounded-lg py-10">
-                    
-                    { msg_file && <Alert /> }
 
                     <Dropzone />
                     

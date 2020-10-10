@@ -42,6 +42,11 @@ const AuthReducer = ( state, action ) => {
                 msg_file: action .payload,
                 loading: false
             }
+        case LINK_SUCCESSFULLY_CREATED:
+            return {
+                ...state,
+                url: action .payload
+            }
         default:
             return state;
     }

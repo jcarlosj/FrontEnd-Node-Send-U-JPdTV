@@ -28,7 +28,11 @@ const AppState = ({ children }) => {
             msg_file: null,
             name: '',
             original_name: '',
-            loading: false
+            loading: false,
+            downloads: 1,
+            password: null,
+            author: null,
+            url: null
         },            //  Define State
         [ state, dispath ] = useReducer( AppReducer, initialState );   //  Define Reducer
 
@@ -86,6 +90,33 @@ const AppState = ({ children }) => {
 
     }
 
+    /** Create Link */
+    const createLink = async () => {
+        console .log( 'Creando enlace...' );
+
+        const data = {
+            name: state .name,
+            original_name: state .original_name,
+            downloads: state .downloads,
+            password: state .password,
+            author: state .author
+        };
+
+        try {
+            const response = await clientAxios .post( '/api/links', data );
+
+            console .log( 'createLink', response .data .url );
+
+            dispath({
+                type: LINK_SUCCESSFULLY_CREATED,
+                payload: response .data .url
+            });
+        } 
+        catch( error ) {
+            console .log( error );
+        }
+    }
+
     return(
         <AppContext .Provider
             value={{ 
@@ -93,8 +124,13 @@ const AppState = ({ children }) => {
                 name: state .name,
                 original_name: state .original_name,
                 loading: state .loading,
+                downloads: state .downloads,
+                password: state .password,
+                author: state .author,
+                url: state .url,
                 showMessage,
-                uploadFile
+                uploadFile,
+                createLink
             }}
         >
             { children }
