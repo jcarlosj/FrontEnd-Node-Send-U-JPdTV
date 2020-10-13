@@ -53,7 +53,13 @@ const LinkDynamicComponent = ({ link }) => {
 
     return (
         <Layout>
-            <h1>Component with Dynamic Routing <strong>[{ link .url }].js</strong></h1>
+            <h1 className="text-4xl text-center text-gray-700">Archivo disponible</h1>
+            <div className="flex items-center justify-center mt-10">
+                <a 
+                    href={ `${ process .env .backendURL }/${ link .name }` }
+                    className="bg-red-400 text-center px-10 py-3 rounded font-bold text-white cursor-pointer"
+                >Descarga aquí</a>
+            </div>
         </Layout>
     );
 }
