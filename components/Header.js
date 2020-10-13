@@ -1,18 +1,24 @@
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 /** Context */
 import AuthContext from '../context/auth/auth.context';
+import AppContext from '../context/app/app.context';
 
 /** Component */
 const Header = () => {
 
-    /** Access to the State and Context functions */
     const 
-        authContext = useContext( AuthContext ),
+        /** Access to the State and Context functions */
+        authContext = useContext( AuthContext ),        //  AuthContext
         {   user, 
             getAuthenticatedUser, SignOff 
-        } = authContext;
+        } = authContext,
+        appContext = useContext( AppContext ),          //  AppContext
+        {   resetState } = appContext,
+        /** Router */
+        router = useRouter;
 
     /** Change tracking
      * Similar to componentDidMount and componentDidUpdate  */
@@ -20,13 +26,17 @@ const Header = () => {
         getAuthenticatedUser();     //  Extract authenticated user from token in LocalStorage
     }, [] );
 
+    const redirectHome = () => {
+        router .push( '/' );
+        resetState();
+    }
+
     return(
         <header className="py-8 flex flex-col md:flex-row itmes-center justify-between">
-            <Link href="/">
-                <a>
-                    <img className="w-64 mb-8 md:mb-0" src="/logo.svg" />
-                </a>
-            </Link>
+            
+            <a onClick={ () => redirectHome() }>
+                <img className="w-64 mb-8 md:mb-0 cursor-pointer" src="/logo.svg" />
+            </a>
             
             <div>
                 { /** Check if there is an authenticated user to show options */
