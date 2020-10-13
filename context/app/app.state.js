@@ -15,7 +15,8 @@ import {
     SUCESSFUL_FILE_UPLOAD,
     ERRONEOUS_FILE_UPLOAD,
     LINK_SUCCESSFULLY_CREATED,
-    ERROR_CREATING_LINK
+    ERROR_CREATING_LINK,
+    RESET_APPCONTEXT_STATE
 } from '../../types';
 
 /** Define State:
@@ -117,6 +118,13 @@ const AppState = ({ children }) => {
         }
     }
 
+    /** Reset default state */
+    const resetState = () => {
+        dispath({
+            type: RESET_APPCONTEXT_STATE
+        });
+    }
+
     return(
         <AppContext .Provider
             value={{ 
@@ -130,7 +138,8 @@ const AppState = ({ children }) => {
                 url: state .url,
                 showMessage,
                 uploadFile,
-                createLink
+                createLink,
+                resetState
             }}
         >
             { children }
