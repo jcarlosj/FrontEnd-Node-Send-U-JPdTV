@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Layout from '../../components/Layout';
 
 /** Dependencies */
@@ -14,7 +15,7 @@ export async function getServerSideProps({ params }) {      //  Destructuracion 
 
     return { 
         props: {                        //  Propiedad Obligatoria: Se pasara al componente dinamico, es decir como props a LinkDynamicComponent
-            link: response .data .link  //  Esta propiedad debe tener el mismo nombre del archivo que define el Componente Dinámico, en este caso [link].js 
+            link: response .data        //  Nombre de la propiedad contenida en los props que se pasa al Componente Dinámico, en este caso [link].js 
         } 
     };
     /**
@@ -47,19 +48,70 @@ export async function getServerSidePaths() {
   
 
 /** Dynamic Component */
-const LinkDynamicComponent = ({ link }) => {
+const LinkDynamicComponent = ({ link }) => {    //  Propiedad establecida para los props del componente
 
-    console .info( 'LinkDynamicComponent', link );
+    const [ hasPassword, setHasPassword ] = useState( link .hasPassword );
+
+    console .info( 'LinkDynamicComponent', link );      //  Despliegue publico de datos (link es la propiedad definida para el prop) del componente dinámico
+    console .info( 'hasPassword', hasPassword );
+
+    /** Verify Password */
+    const verifyPassword = event => {
+        event .preventDefault();
+        console .log( 'Verificando...' );
+    }
 
     return (
         <Layout>
-            <h1 className="text-4xl text-center text-gray-700">Archivo disponible</h1>
-            <div className="flex items-center justify-center mt-10">
-                <a 
-                    href={ `${ process .env .backendURL }/api/files/${ link .name }` }
-                    className="bg-red-400 text-center px-10 py-3 rounded font-bold text-white cursor-pointer"
-                >Descarga aquí</a>
-            </div>
+
+            { hasPassword
+                ?   <> 
+                        <div className="flex justify-center mt-5">
+                            <div className="w-full max-w-lg">
+
+                            <p className="py-3 px-8">Enlace protegido, ingresa la contraseña a continuación</p>
+
+                                <form 
+                                    className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
+                                    onSubmit={ ev => verifyPassword( ev ) }
+                                >
+                                    
+                                    <div className="mb-4">
+                                        <label 
+                                            className="block text-black text-sm font-bold mb-2"
+                                            htmlFor="password"
+                                        >Contraseña</label>
+                                        <input 
+                                            id="password"
+                                            type="password" 
+                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            placeholder="Contraseña de acceso"
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <button
+                                            type="submit"
+                                            className="bg-red-400 hover:bg-gray-900 rounded w-full p-2 text-white uppercase font-bold"
+                                        >Validar Contraseña...</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </>
+                :   <>
+                        <h1 className="text-4xl text-center text-gray-700">Archivo disponible</h1>
+                        <div className="flex items-center justify-center mt-10">
+                            <a 
+                                href={ `${ process .env .backendURL }/api/files/${ link .name }` }
+                                className="bg-red-400 text-center px-10 py-3 rounded font-bold text-white cursor-pointer"
+                            >Descarga aquí</a>
+                        </div>
+                    </>
+            }
+
+            
         </Layout>
     );
 }
