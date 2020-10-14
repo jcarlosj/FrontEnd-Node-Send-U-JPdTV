@@ -17,7 +17,8 @@ import {
     LINK_SUCCESSFULLY_CREATED,
     ERROR_CREATING_LINK,
     RESET_APPCONTEXT_STATE,
-    ADD_PASSWORD
+    ADD_PASSWORD,
+    ADD_ALLOWED_DOWNLOADS
 } from '../../types';
 
 /** Define State:
@@ -135,6 +136,15 @@ const AppState = ({ children }) => {
         });
     }
 
+    /** Add number of downloads allowed for the link */
+    const addAllowedDownloads = allowedAmount => {
+        console .log( 'Cantidad permitida', allowedAmount );
+        dispath({
+            type: ADD_ALLOWED_DOWNLOADS,
+            payload: Number( allowedAmount )
+        });
+    }
+
     return(
         <AppContext .Provider
             value={{ 
@@ -150,7 +160,8 @@ const AppState = ({ children }) => {
                 uploadFile,
                 createLink,
                 resetState,
-                addPassword
+                addPassword,
+                addAllowedDownloads
             }}
         >
             { children }
