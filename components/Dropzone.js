@@ -7,6 +7,9 @@ import AuthContext from '../context/auth/auth.context';
 /** Dependencies */
 import { useDropzone } from 'react-dropzone';
 
+/** Components */
+import Form from '../components/Form';
+
 const Dropzone = () => {
 
     /** Access to the State and Context functions */
@@ -68,8 +71,8 @@ const Dropzone = () => {
                         <ul>{ files }</ul>
 
                         { is_authenticated
-                            ?   'Estas autenticado'
-                            :   'No estas autenticado'
+                            ?   <Form />
+                            :   'Registrate y amplia tus opciones'
                         }
 
                         { loading 
