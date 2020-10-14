@@ -72,7 +72,7 @@ const Dropzone = () => {
 
                         { is_authenticated
                             ?   <Form />
-                            :   'Registrate y amplia tus opciones'
+                            :   <p className="text-center">Registrate y amplia tus opciones</p>
                         }
 
                         { loading 
