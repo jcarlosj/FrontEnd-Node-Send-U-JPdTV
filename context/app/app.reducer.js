@@ -7,7 +7,8 @@ import {
     ERRONEOUS_FILE_UPLOAD,
     LINK_SUCCESSFULLY_CREATED,
     ERROR_CREATING_LINK,
-    RESET_APPCONTEXT_STATE
+    RESET_APPCONTEXT_STATE,
+    ADD_PASSWORD
 } from '../../types';
 
 /** Reducer are the functions that will modify the State  */
@@ -59,6 +60,11 @@ const AuthReducer = ( state, action ) => {
                 password: null,
                 author: null,
                 url: null
+            }
+        case ADD_PASSWORD:
+            return {
+                ...state,
+                password: action .payload
             }
         default:
             return state;

@@ -16,7 +16,8 @@ import {
     ERRONEOUS_FILE_UPLOAD,
     LINK_SUCCESSFULLY_CREATED,
     ERROR_CREATING_LINK,
-    RESET_APPCONTEXT_STATE
+    RESET_APPCONTEXT_STATE,
+    ADD_PASSWORD
 } from '../../types';
 
 /** Define State:
@@ -125,6 +126,15 @@ const AppState = ({ children }) => {
         });
     }
 
+    /** Add password to download link */
+    const addPassword = pass => {
+        console .log( 'Contraseña', pass );
+        dispath({
+            type: ADD_PASSWORD,
+            payload: pass
+        });
+    }
+
     return(
         <AppContext .Provider
             value={{ 
@@ -139,7 +149,8 @@ const AppState = ({ children }) => {
                 showMessage,
                 uploadFile,
                 createLink,
-                resetState
+                resetState,
+                addPassword
             }}
         >
             { children }

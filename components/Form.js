@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+/** Context */
+import AppContext from '../context/app/app.context';
 
 /** Component */
 const Form = () => {
 
-    // Define State
-    const [ hasPassword, setHasPassword ] = useState( false );
+    
+    const 
+        [ hasPassword, setHasPassword ] = useState( false ),    //  Define State
+        appContext = useContext( AppContext ),                  //  AppContext
+        { addPassword } = appContext;
 
     return( 
         <div className="w-full mt-20">
@@ -29,6 +35,7 @@ const Form = () => {
                     ?   <input 
                             type="password" 
                             className="appearance-none w-full mt-2 bg-white border border-gray-400 text-black py-3 px-4 pr-8 rounded leading-none focus:outline-none focus:border-gray-500"
+                            onChange={ ev => addPassword( ev .target .value ) }
                         />
                     :   null
                 }
