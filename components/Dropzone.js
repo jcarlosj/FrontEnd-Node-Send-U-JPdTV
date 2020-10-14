@@ -2,6 +2,7 @@ import React, { useCallback, useContext } from 'react';
 
 /** Context */
 import AppContext from '../context/app/app.context';
+import AuthContext from '../context/auth/auth.context';
 
 /** Dependencies */
 import { useDropzone } from 'react-dropzone';
@@ -10,10 +11,12 @@ const Dropzone = () => {
 
     /** Access to the State and Context functions */
     const 
-        appContext = useContext( AppContext ),
+        appContext = useContext( AppContext ),      //  AppContext
         {   loading,
             showMessage, uploadFile, createLink
-        } = appContext;
+        } = appContext,
+        authContext = useContext( AuthContext ),    //  AuthContext
+        { is_authenticated } = authContext;
 
     /** Dropzone function: When the uploaded files are accepted */
     const onDropAccepted = useCallback( async ( acceptedFiles ) => {     //  Devuelve un callback memorizado que solo cambia si una de las dependencias ha cambiado.
@@ -63,6 +66,11 @@ const Dropzone = () => {
                 ?   <div className="mt-10 w-full">
                         <h4 className="text-2xl font-bold text-center mb-4">Archivos</h4>
                         <ul>{ files }</ul>
+
+                        { is_authenticated
+                            ?   'Estas autenticado'
+                            :   'No estas autenticado'
+                        }
 
                         { loading 
                             ?   <p className="text-center my-10 text-gray-800 font-bold">Subiendo el archivo...</p>

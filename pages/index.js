@@ -23,7 +23,12 @@ const Index = () => {
     /** Change tracking
      * Similar to componentDidMount and componentDidUpdate  */
     useEffect( () => {
-        getAuthenticatedUser();     //  Extract authenticated user from token in LocalStorage
+        const token = localStorage .getItem( 'rns_token' );
+
+        if( token ) {
+            getAuthenticatedUser();     //  Extract authenticated user from token in LocalStorage
+        }
+        
     }, [] );
 
     return (

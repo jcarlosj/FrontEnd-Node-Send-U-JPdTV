@@ -29,7 +29,8 @@ const AuthReducer = ( state, action ) => {
         case AUTHENTICATED_USER:
             return {
                 ...state,
-                user: action .payload
+                user: action .payload,
+                is_authenticated: true
             };
         case SIGN_OFF:
             localStorage .removeItem( 'rns_token' );

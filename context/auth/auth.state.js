@@ -44,10 +44,13 @@ const AuthState = ({ children }) => {
 
             console .log( 'registerUser', response );
 
-            dispath({       //  Modify the state using the Reducer
-                type: SUCCESSFUL_REGISTRATION,
-                payload: response .data .msg
-            });
+            if( response .data .user ) {
+                dispath({       //  Modify the state using the Reducer
+                    type: SUCCESSFUL_REGISTRATION,
+                    payload: response .data .msg
+                });
+            }
+
         } 
         catch( error ) {
             console .error( error .response .data .msg );
