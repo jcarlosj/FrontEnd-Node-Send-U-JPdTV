@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Layout from '../../components/Layout';
+
+/** Context */
+import AppContext from '../../context/app/app.context';
+
+/** Components */
+import Alert from '../../components/Alert';
 
 /** Dependencies */
 import clientAxios from '../../config/axios';
@@ -52,7 +58,11 @@ const LinkDynamicComponent = ({ link }) => {    //  Propiedad establecida para l
 
     const 
         [ hasPassword, setHasPassword ] = useState( link .hasPassword ),
-        [ password, setPassword ] = useState( '' );
+        [ password, setPassword ] = useState( '' ),
+        appContext = useContext( AppContext ),          //  AppContext
+        {   msg_file,
+            showMessage 
+        } = appContext;;
 
     console .info( 'LinkDynamicComponent', link );      //  Despliegue publico de datos (link es la propiedad definida para el prop) del componente dinámico
     console .info( 'hasPassword', hasPassword );
@@ -71,8 +81,8 @@ const LinkDynamicComponent = ({ link }) => {    //  Propiedad establecida para l
         } 
         catch( error ) {
             console .error( error .response .data .msg );
+            showMessage( error .response .data .msg );
         }
-
         
     }
 
@@ -84,7 +94,9 @@ const LinkDynamicComponent = ({ link }) => {    //  Propiedad establecida para l
                         <div className="flex justify-center mt-5">
                             <div className="w-full max-w-lg">
 
-                            <p className="py-3 px-8">Enlace protegido, ingresa la contraseña a continuación</p>
+                                <p className="py-3 px-8">Enlace protegido, ingresa la contraseña a continuación</p>
+
+                                { msg_file && <Alert /> }
 
                                 <form 
                                     className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
