@@ -50,15 +50,30 @@ export async function getServerSidePaths() {
 /** Dynamic Component */
 const LinkDynamicComponent = ({ link }) => {    //  Propiedad establecida para los props del componente
 
-    const [ hasPassword, setHasPassword ] = useState( link .hasPassword );
+    const 
+        [ hasPassword, setHasPassword ] = useState( link .hasPassword ),
+        [ password, setPassword ] = useState( '' );
 
     console .info( 'LinkDynamicComponent', link );      //  Despliegue publico de datos (link es la propiedad definida para el prop) del componente dinámico
     console .info( 'hasPassword', hasPassword );
 
     /** Verify Password */
-    const verifyPassword = event => {
+    const verifyPassword = async event => {
         event .preventDefault();
-        console .log( 'Verificando...' );
+        
+        try {
+            const
+                data = { password }, 
+                response = await clientAxios .post( `/api/links/${ link .url }`, data );
+                
+            console .log( 'verifyPassword', response );    
+            setHasPassword( response .data .hasPassword );
+        } 
+        catch( error ) {
+            console .error( error .response .data .msg );
+        }
+
+        
     }
 
     return (
@@ -86,6 +101,8 @@ const LinkDynamicComponent = ({ link }) => {    //  Propiedad establecida para l
                                             type="password" 
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             placeholder="Contraseña de acceso"
+                                            value={ password }
+                                            onChange={ ev => setPassword( ev .target .value ) }
                                         />
                                     </div>
                                     <div className="mb-4">
